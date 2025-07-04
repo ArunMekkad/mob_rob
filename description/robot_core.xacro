@@ -165,6 +165,9 @@
     <!-- Assign color in Gazebo -->
     <gazebo reference="caster_wheel"> 
         <material>Gazebo/Black</material>
+        <!-- Remove friction for caster wheel -->
+        <mu1>0.001</mu1>
+        <mu2>0.001</mu2>
     </gazebo>
 
 </robot>
