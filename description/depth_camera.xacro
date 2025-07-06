@@ -1,23 +1,130 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- Depth camera joint and link  -->
-    <joint name="depth_camera_joint" type="fixed">
+    <!-- Define depth camera colors -->
+    <material name="depth_camera_black">
+        <color rgba="0.05 0.05 0.05 1"/>
+    </material>
+    
+    <material name="depth_camera_dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+    </material>
+
+    <!-- Depth camera housing -->
+    <joint name="depth_camera_housing_joint" type="fixed">
         <parent link="chassis"/>
+        <child link="depth_camera_housing"/>
+        <origin xyz="0.295 0 0.13" rpy="0 0 0"/>
+    </joint>
+
+    <link name="depth_camera_housing">
+        <visual>
+            <geometry>
+                <box size="0.02 0.095 0.02"/>
+            </geometry>
+            <material name="depth_camera_black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.02 0.095 0.02"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.03" x="0.02" y="0.095" z="0.02">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+    <gazebo reference="depth_camera_housing">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <!-- Left IR camera -->
+    <joint name="depth_left_ir_joint" type="fixed">
+        <parent link="depth_camera_housing"/>
+        <child link="depth_left_ir"/>
+        <origin xyz="0.011 0.035 0" rpy="0 1.5708 0"/>
+    </joint>
+
+    <link name="depth_left_ir">
+        <visual>
+            <geometry>
+                <cylinder radius="0.005" length="0.003"/>
+            </geometry>
+            <material name="depth_camera_dark_grey"/>
+        </visual>
+    </link>
+    <gazebo reference="depth_left_ir">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <!-- Right IR camera -->
+    <joint name="depth_right_ir_joint" type="fixed">
+        <parent link="depth_camera_housing"/>
+        <child link="depth_right_ir"/>
+        <origin xyz="0.011 -0.035 0" rpy="0 1.5708 0"/>
+    </joint>
+
+    <link name="depth_right_ir">
+        <visual>
+            <geometry>
+                <cylinder radius="0.005" length="0.003"/>
+            </geometry>
+            <material name="depth_camera_dark_grey"/>
+        </visual>
+    </link>
+    <gazebo reference="depth_right_ir">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <!-- RGB camera in center -->
+    <joint name="depth_rgb_joint" type="fixed">
+        <parent link="depth_camera_housing"/>
+        <child link="depth_rgb"/>
+        <origin xyz="0.011 0 0" rpy="0 1.5708 0"/>
+    </joint>
+
+    <link name="depth_rgb">
+        <visual>
+            <geometry>
+                <cylinder radius="0.004" length="0.003"/>
+            </geometry>
+            <material name="depth_camera_dark_grey"/>
+        </visual>
+    </link>
+    <gazebo reference="depth_rgb">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <!-- IR projector (between left camera and RGB) -->
+    <joint name="depth_projector_joint" type="fixed">
+        <parent link="depth_camera_housing"/>
+        <child link="depth_projector"/>
+        <origin xyz="0.011 0.0175 0" rpy="0 1.5708 0"/>
+    </joint>
+
+    <link name="depth_projector">
+        <visual>
+            <geometry>
+                <cylinder radius="0.003" length="0.003"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+    </link>
+    <gazebo reference="depth_projector">
+        <material>Gazebo/RedGlow</material>
+    </gazebo>
+
+    <!-- Main depth camera link (hidden, for sensor attachment) -->
+    <joint name="depth_camera_joint" type="fixed">
+        <parent link="depth_camera_housing"/>
         <child link="depth_camera_link"/>
-        <origin xyz="0.305 0 0.13" rpy="0 0 0"/>
+        <origin xyz="0.01 0 0" rpy="0 0 0"/>
     </joint>
 
     <link name="depth_camera_link">
-        <visual>
-            <geometry>
-                <box size="0.015 0.09 0.015"/>
-            </geometry>
-            <material name="green"/>
-        </visual>
+        <!-- No visual, just for sensor attachment -->
     </link>
 
-    <!-- Depth camera joint and link optical for different frame of reference -->
+    <!-- Depth camera optical frame -->
     <joint name="depth_camera_joint_optical" type="fixed">
         <parent link="depth_camera_link"/>
         <child link="depth_camera_link_optical"/>
@@ -26,13 +133,12 @@
 
     <link name="depth_camera_link_optical"></link>
     
-    <!-- Gazebo reference for depth_camera_link -->
+    <!-- Gazebo sensor configuration -->
     <gazebo reference="depth_camera_link">
-        <material>Gazebo/Green</material>
-        <sensor name="camera" type="depth">
+        <sensor name="depth_camera" type="depth">
             <pose> 0 0 0 0 0 0 </pose>
-            <visualize> true </visualize>
-            <update_rate> 10</update_rate>
+            <visualize>false</visualize>
+            <update_rate>10</update_rate>
             <camera>
                 <horizontal_fov>1.089</horizontal_fov>
                 <image>
@@ -52,4 +158,5 @@
             </plugin>
         </sensor>
     </gazebo>
+
 </robot>
