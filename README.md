@@ -1,4 +1,4 @@
-# mob_rob: ROS 2 Mobile Robot Simulation
+# MobRob: ROS 2 Mobile Robot Simulation
 
 A ROS 2 package for simulating and visualizing a mobile robot in Gazebo and RViz2, with SLAM and autonomous navigation using the Nav2 stack.
 
