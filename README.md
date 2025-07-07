@@ -38,7 +38,7 @@ sudo apt install ros-humble-gazebo-ros-pkgs ros-humble-ros2-control ros-humble-r
 1. Clone this repository into your ROS 2 workspace `src` directory:
    ```sh
    cd ~/Files/ROS2/ros2_ws/src
-   git clone [mob_rob](https://github.com/ArunMekkad/mob_rob.git)
+   git clone https://github.com/ArunMekkad/mob_rob.git
    cd ..
    ```
 2. Build the workspace:
@@ -97,7 +97,7 @@ See `LICENSE.md` for details.
 
 ## Acknowledgement
 
-Huge shoutout to Josh Newans [Articulated Robotics](https://articulatedrobotics.xyz/) for the motivation!
+Huge shoutout to [Josh Newans](https://github.com/joshnewans) of [Articulated Robotics](https://articulatedrobotics.xyz/) for the motivation!
 
 ## Maintainer
 Arun Mekkad (<mekkad.a@northeastern.edu>)
