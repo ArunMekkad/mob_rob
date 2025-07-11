@@ -14,7 +14,7 @@ def generate_launch_description():
 
     # Get paths to configuration files and world
     world_file_path = PathJoinSubstitution([
-        pkg_mob_rob, 'worlds', 'test.world'
+        pkg_mob_rob, 'worlds', 'outdoor.world'
     ])
     slam_params_file_path = PathJoinSubstitution([
         pkg_mob_rob, 'config', 'mapper_params_online_async.yaml'

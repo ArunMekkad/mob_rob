@@ -47,7 +47,7 @@ def generate_launch_description():
         arguments=['diff_cont']
     )
 
-    # Joint broad node 'ros2 run controller_manager spawner diff_cont'
+    # Joint broad node 'ros2 run controller_manager spawner joint_broad'
 
     joint_broad = Node(
         package="controller_manager",
